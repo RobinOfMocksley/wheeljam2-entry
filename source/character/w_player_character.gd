@@ -14,9 +14,10 @@ class_name WPlayerCharacter
 #@export var input_fly_mode_action_name := "move_fly_mode"
 
 @onready var dodge_ability : WDodgeAbility3D = $WDodgeAbility3D
-@onready var camera_ref : Marker3D = $Head/FirstPersonCameraReference
+@onready var camera_ref : Marker3D = $Head
 
-@export var underwater_env: Environment
+#this should be set automatically but who really cares
+@export var ztarget : Node3D
 
 
 func _ready():
@@ -28,6 +29,14 @@ func _ready():
 
 
 func _physics_process(delta):
+	# rotate head to face z target
+	var forward = -transform.basis.z
+	var dir_to_target = (ztarget.global_position - global_position).normalized()
+	dir_to_target.y = 0.0
+	var rotate_dir = (dir_to_target - forward)
+	if(dir_to_target.dot(forward) != 1.0):
+		rotate_head(Vector2(rotate_dir.x, rotate_dir.y) * 100.0)
+	
 	var is_valid_input := Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED
 	
 	if is_valid_input:
@@ -36,8 +45,9 @@ func _physics_process(delta):
 	else:
 		move(delta)
 
-
+"""
 func _input(event: InputEvent) -> void:
 	# Mouse look (only if the mouse is captured).
 	if event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
 		rotate_head(event.screen_relative)
+"""
