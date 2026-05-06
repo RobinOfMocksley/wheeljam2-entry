@@ -11,6 +11,8 @@
 [ext_resource type="Script" uid="uid://bx7pp0eao8dne" path="res://addons/character-controller/abilities/jump_ability_3d.gd" id="9_klhe0"]
 [ext_resource type="Script" uid="uid://bhhgclxxaf853" path="res://addons/character-controller/abilities/fly_ability_3d.gd" id="10_dbxly"]
 [ext_resource type="Script" uid="uid://brs53isg6clxe" path="res://addons/character-controller/abilities/swim_ability_3d.gd" id="11_hw3yl"]
+[ext_resource type="PackedScene" uid="uid://ynmfrkjnnm6r" path="res://addons/the-wheel-godot/wheel.tscn" id="12_76jla"]
+[ext_resource type="Script" uid="uid://b0itbkw7cytrs" path="res://source/character/w_collision_handler.gd" id="13_phaoh"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_80ktp"]
 
@@ -70,3 +72,38 @@ collision_mask = 8
 hit_from_inside = true
 collide_with_areas = true
 collide_with_bodies = false
+
+[node name="Control" type="Control" parent="." unique_id=346500988]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Wheel" parent="Control" unique_id=147374003 instance=ExtResource("12_76jla")]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -300.0
+offset_right = 300.0
+grow_vertical = 0
+
+[node name="Label" type="Label" parent="Control" unique_id=916332905]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.275
+anchor_bottom = 0.231
+text = "Direction: "
+
+[node name="CollisionHandler" type="Node" parent="." unique_id=1312737658]
+script = ExtResource("13_phaoh")
+metadata/_custom_type_script = "uid://b0itbkw7cytrs"
+
+[connection signal="new_dir_chosen" from="Control/Wheel" to="." method="_on_wheel_new_dir_chosen"]
+[connection signal="new_dir_selected" from="Control/Wheel" to="." method="_on_wheel_new_dir_selected"]
+[connection signal="strike_blocked" from="CollisionHandler" to="." method="_on_collision_handler_strike_blocked"]
+[connection signal="strike_taken" from="CollisionHandler" to="." method="_on_collision_handler_strike_taken"]

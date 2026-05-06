@@ -15,17 +15,21 @@ class_name WPlayerCharacter
 
 @onready var dodge_ability : WDodgeAbility3D = $WDodgeAbility3D
 @onready var camera_ref : Marker3D = $Head
+# the wheel handles its own input, we only need to respond to it. praise be.
+@onready var wheel : Wheel = $Control/Wheel
+@onready var debug_label : Label = $Control/Label
+@onready var col_handler : CollisionHandler = $CollisionHandler
 
 #this should be set automatically but who really cares
 @export var ztarget : Node3D
+@export var show_debug_values : bool = true
 
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	setup()
 	_abilities.append(dodge_ability)
-	#emerged.connect(_on_controller_emerged.bind())
-	#submerged.connect(_on_controller_subemerged.bind())
+	
 
 
 func _physics_process(delta):
@@ -45,9 +49,38 @@ func _physics_process(delta):
 	else:
 		move(delta)
 
+
+func receive_strike(hit_pos: Vector3, incoming_damage : int) -> void:
+	col_handler.resolve_strike(position, hit_pos, wheel.current_direction, true, incoming_damage)
+
+
 """
-func _input(event: InputEvent) -> void:
-	# Mouse look (only if the mouse is captured).
-	if event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
-		rotate_head(event.screen_relative)
+#region WheelPayload Class
+## allows us to create wheel payload objects and assign values to the wheel.
+class WheelPayload:
+	var base_value:int
+	var slice_value:int
+	var total_value:int
+#endregion
+var current_direction:int = 0 ## where the selector currently is.
+const DIRECTIONS:Array[int] = [0,90,180,270] ## rotation value (in degrees) for the wheel directions. [UP,RIGHT,DOWN,LEFT]
 """
+# Wheel Slice selected
+func _on_wheel_new_dir_chosen(payload: RefCounted) -> void:
+	#attacks go here, the above payload can be used to calculate wheel value
+	pass
+
+
+# Wheel rotated
+func _on_wheel_new_dir_selected() -> void:
+	var text = "Wheel direction: %d" % wheel.current_direction
+	debug_label.text = text
+	#change stance here
+
+
+func _on_collision_handler_strike_taken(damage: int) -> void:
+	pass # Replace with function body.
+
+
+func _on_collision_handler_strike_blocked() -> void:
+	pass # Replace with function body.
