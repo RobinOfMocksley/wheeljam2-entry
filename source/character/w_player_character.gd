@@ -25,6 +25,8 @@ signal player_slain()
 @export var ztarget : Node3D
 @export var show_debug_values : bool = true
 
+var lock_movement : bool = false
+
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -44,7 +46,7 @@ func _physics_process(delta):
 	
 	var is_valid_input := Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED
 	
-	if is_valid_input:
+	if is_valid_input and not lock_movement:
 		var input_axis = Input.get_vector(input_left_action_name, input_right_action_name, input_back_action_name, input_forward_action_name)
 		move(delta, input_axis, false, false, false, false, false)
 	else:
@@ -81,8 +83,9 @@ func _on_wheel_new_dir_selected() -> void:
 
 func _on_collision_handler_strike_taken(damage: int) -> void:
 	hp -= damage
-	if hp >= 0:
+	if hp <= 0:
 		player_slain.emit()
+		lock_movement = true
 
 
 func _on_collision_handler_strike_blocked() -> void:

@@ -23,6 +23,7 @@ signal opponent_slain()
 #@export var show_debug_values : bool = true
 
 var current_stance_direction : int
+var lock_movement : bool = false
 
 
 func _ready():
@@ -41,7 +42,7 @@ func _physics_process(delta):
 		rotate_head(Vector2(rotate_dir.x, rotate_dir.y) * 100.0)
 	
 	# need to decide how AI does inputs
-	if false:
+	if false and not lock_movement:
 		var input_axis #= Input.get_vector(input_left_action_name, input_right_action_name, input_back_action_name, input_forward_action_name)
 		move(delta, input_axis, false, false, false, false, false)
 	else:
@@ -60,8 +61,9 @@ func receive_strike(hit_pos: Vector3, incoming_damage : int) -> void:
 
 func _on_collision_handler_strike_taken(damage: int) -> void:
 	hp -= damage
-	if hp >= 0:
+	if hp <= 0:
 		opponent_slain.emit()
+		lock_movement = true
 
 
 func _on_collision_handler_strike_blocked() -> void:

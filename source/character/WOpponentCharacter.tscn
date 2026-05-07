@@ -17,6 +17,8 @@
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_juusd"]
 
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_27sbo"]
+
 [node name="WOpponentCharacter" type="CharacterBody3D" unique_id=1047846688]
 script = ExtResource("1_p468n")
 metadata/_custom_type_script = "uid://b01ee3wqjfu5v"
@@ -75,6 +77,9 @@ collide_with_bodies = false
 [node name="CollisionHandler" type="Node" parent="." unique_id=1666192102]
 script = ExtResource("12_riy33")
 metadata/_custom_type_script = "uid://b0itbkw7cytrs"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1652095438]
+mesh = SubResource("CapsuleMesh_27sbo")
 
 [connection signal="strike_blocked" from="CollisionHandler" to="." method="_on_collision_handler_strike_blocked"]
 [connection signal="strike_taken" from="CollisionHandler" to="." method="_on_collision_handler_strike_taken"]

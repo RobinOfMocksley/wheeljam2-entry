@@ -15,7 +15,7 @@ var _is_dodging : bool = false
 var _dodge_speed : float = 0.0
 var _dodge_direction : Vector3 = Vector3.ZERO
 
-func apply(velocity : Vector3, speed : float, is_on_floor : bool, direction : Vector3, _delta : float) -> Vector3:
+func apply(velocity : Vector3, _speed : float, _is_on_floor : bool, direction : Vector3, _delta : float) -> Vector3:
 	if not _is_dodging:
 		# No change if not dodging
 		if direction == Vector3.ZERO:
