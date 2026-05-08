@@ -1,0 +1,202 @@
+[gd_scene format=4 uid="uid://ctoku8cmd536i"]
+
+[ext_resource type="Script" uid="uid://bcyhu4r20152q" path="res://source/game/game_manager.gd" id="1_awdnm"]
+[ext_resource type="PackedScene" uid="uid://c15cdg3o5fl7s" path="res://source/character/WPlayerCharacter.tscn" id="2_e7om1"]
+[ext_resource type="PackedScene" uid="uid://og4d7xwedns0" path="res://source/character/WOpponentCharacter.tscn" id="3_jltp2"]
+[ext_resource type="AudioStream" uid="uid://cajnhdt7u2s0s" path="res://assets/audio/fight_jingles/fight_lose-fix.ogg" id="4_vrjq3"]
+[ext_resource type="Script" uid="uid://dj0uav12ij5a5" path="res://source/debug_control.gd" id="4_w3mux"]
+[ext_resource type="Texture2D" uid="uid://svijnbaaeuol" path="res://addons/character-controller/example/main/textures/Free DEMO Pixel Skies Background pack by Digital Moons/demo01_PixelSky.png" id="5_1c8qj"]
+[ext_resource type="AudioStream" uid="uid://upcmgu68ug2k" path="res://assets/audio/fight_jingles/fight_begin-fix.ogg" id="5_kcv3h"]
+[ext_resource type="Script" uid="uid://bmy13ib0322y" path="res://addons/character-controller/example/main/level.gd" id="6_5r52i"]
+[ext_resource type="AudioStream" uid="uid://d3hyn1qffm07w" path="res://assets/audio/fight_jingles/fight_win-fix.ogg" id="7_g8cxv"]
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_awdnm"]
+_surfaces = [{
+"aabb": AABB(-5, -0.5, -5, 10, 1, 10),
+"attribute_data": PackedByteArray("AACAPwAAgD8AAIA/AAAAAAAAAAAAAAAAAACAPwAAgD8AAIA/AAAAAAAAAAAAAAAAAACAPwAAgD8AAIA/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAPwAAgD8AAIA/AAAAAAAAAAAAAAAAAACAPwAAgD8AAIA/AAAAAAAAAAAAAAAAAACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAPwAAgD8AAIA/"),
+"format": 34359738391,
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 36,
+"vertex_data": PackedByteArray("AACgwAAAAL8AAKBAAACgwAAAAL8AAKDAAACgwAAAAD8AAKDAAACgQAAAAL8AAKDAAACgwAAAAL8AAKDAAACgwAAAAL8AAKBAAACgwAAAAD8AAKDAAACgwAAAAL8AAKDAAACgQAAAAL8AAKDAAACgwAAAAD8AAKDAAACgwAAAAD8AAKBAAACgwAAAAL8AAKBAAACgwAAAAL8AAKBAAACgwAAAAD8AAKBAAACgQAAAAD8AAKBAAACgQAAAAD8AAKBAAACgwAAAAD8AAKBAAACgwAAAAD8AAKDAAACgwAAAAL8AAKBAAACgQAAAAL8AAKBAAACgQAAAAL8AAKDAAACgQAAAAD8AAKBAAACgQAAAAL8AAKBAAACgwAAAAL8AAKBAAACgQAAAAL8AAKDAAACgQAAAAL8AAKBAAACgQAAAAD8AAKBAAACgQAAAAL8AAKDAAACgQAAAAD8AAKDAAACgwAAAAD8AAKDAAACgwAAAAD8AAKDAAACgQAAAAD8AAKDAAACgQAAAAD8AAKBAAACgQAAAAD8AAKBAAACgQAAAAD8AAKDAAACgQAAAAL8AAKDAAAD/f/9//n8AAP9//3/+fwAA/3//f/5//38AAP//AAD/fwAA//8AAP9/AAD//wAA/////wAA/z//////AAD/P/////8AAP8/AAD/f/9//n8AAP9//3/+fwAA/3//f/5//3//fwAA/z//f/9/AAD/P/9//38AAP8//3//////AAD/f/////8AAP9//////wAA/38AAP//AAD/fwAA//8AAP9/AAD//wAA/3//fwAA/z//f/9/AAD/P/9//38AAP8/////f/9//n////9//3/+f////3//f/5//////wAA/z//////AAD/P/////8AAP8//3//////AAD/f/////8AAP9//////wAA////f/9//n////9//3/+f////3//f/5/")
+}]
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_e7om1"]
+data = PackedVector3Array(-5, -0.5, 5, -5, -0.5, -5, -5, 0.5, -5, 5, -0.5, -5, -5, -0.5, -5, -5, -0.5, 5, -5, 0.5, -5, -5, -0.5, -5, 5, -0.5, -5, -5, 0.5, -5, -5, 0.5, 5, -5, -0.5, 5, -5, -0.5, 5, -5, 0.5, 5, 5, 0.5, 5, 5, 0.5, 5, -5, 0.5, 5, -5, 0.5, -5, -5, -0.5, 5, 5, -0.5, 5, 5, -0.5, -5, 5, 0.5, 5, 5, -0.5, 5, -5, -0.5, 5, 5, -0.5, -5, 5, -0.5, 5, 5, 0.5, 5, 5, -0.5, -5, 5, 0.5, -5, -5, 0.5, -5, -5, 0.5, -5, 5, 0.5, -5, 5, 0.5, 5, 5, 0.5, 5, 5, 0.5, -5, 5, -0.5, -5)
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_5r52i"]
+panorama = ExtResource("5_1c8qj")
+filter = false
+
+[sub_resource type="Sky" id="Sky_t5ash"]
+sky_material = SubResource("PanoramaSkyMaterial_5r52i")
+radiance_size = 0
+
+[sub_resource type="Environment" id="Environment_g8cxv"]
+background_mode = 2
+background_energy_multiplier = 0.5
+sky = SubResource("Sky_t5ash")
+ambient_light_color = Color(1, 1, 1, 1)
+tonemap_mode = 2
+glow_enabled = true
+
+[node name="SceneRoot" type="Node" unique_id=1907261897]
+
+[node name="GameManager" type="Node" parent="." unique_id=858042265 node_paths=PackedStringArray("opponent", "player", "opponent_start", "player_start")]
+script = ExtResource("1_awdnm")
+rounds_to_win = 2
+opponent = NodePath("../WOpponentCharacter")
+player = NodePath("../WPlayerCharacter")
+opponent_start = NodePath("../Starts/OpponentStartMarker3D")
+player_start = NodePath("../Starts/PlayerStartMarker3D")
+
+[node name="Timers" type="Node" parent="GameManager" unique_id=1537586683]
+
+[node name="RestartTimer" type="Timer" parent="GameManager/Timers" unique_id=385279852]
+wait_time = 2.0
+one_shot = true
+
+[node name="PreRestartTimer" type="Timer" parent="GameManager/Timers" unique_id=61498362]
+one_shot = true
+
+[node name="GameUI" type="Control" parent="GameManager" unique_id=1947179672]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RoundRestart" type="Control" parent="GameManager/GameUI" unique_id=2132513086]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ProgressBar" type="ProgressBar" parent="GameManager/GameUI/RoundRestart" unique_id=229533708]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.47200003
+anchor_top = 0.323
+anchor_right = 0.78700006
+anchor_bottom = 0.37800002
+show_percentage = false
+
+[node name="Label" type="Label" parent="GameManager/GameUI/RoundRestart" unique_id=692902198]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.47500002
+anchor_top = 0.21100001
+anchor_right = 0.786
+anchor_bottom = 0.31
+text = "ROUND x"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_trim_flags = 128
+
+[node name="DebugControl" type="Control" parent="GameManager/GameUI" unique_id=10258727 node_paths=PackedStringArray("player", "opp")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("4_w3mux")
+player = NodePath("../../../WPlayerCharacter")
+opp = NodePath("../../../WOpponentCharacter")
+
+[node name="StrikePlayerButton" type="Button" parent="GameManager/GameUI/DebugControl" unique_id=2011387311]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.84800005
+anchor_right = 1.0
+anchor_bottom = 0.11100001
+grow_horizontal = 2
+text = "Strike Player"
+
+[node name="StrikeOppButton" type="Button" parent="GameManager/GameUI/DebugControl" unique_id=960145701]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.845
+anchor_top = 0.11100001
+anchor_right = 1.0
+anchor_bottom = 0.21900001
+grow_horizontal = 2
+text = "Strike Opponent
+"
+
+[node name="Label" type="Label" parent="GameManager/GameUI/DebugControl" unique_id=657071700]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.85300004
+anchor_top = 0.22200002
+anchor_right = 1.0
+anchor_bottom = 0.34800002
+text = "Player Health: X
+Opponent Health: X"
+horizontal_alignment = 2
+
+[node name="GameAudio" type="Node" parent="GameManager" unique_id=220877233]
+
+[node name="WinAudioStreamPlayer" type="AudioStreamPlayer" parent="GameManager/GameAudio" unique_id=1424318271]
+stream = ExtResource("7_g8cxv")
+bus = &"Music"
+
+[node name="LoseAudioStreamPlayer" type="AudioStreamPlayer" parent="GameManager/GameAudio" unique_id=853396836]
+stream = ExtResource("4_vrjq3")
+bus = &"Music"
+
+[node name="BeginAudioStreamPlayer" type="AudioStreamPlayer" parent="GameManager/GameAudio" unique_id=1757399982]
+stream = ExtResource("5_kcv3h")
+bus = &"Music"
+
+[node name="LevelGeo" type="Node3D" parent="." unique_id=131662953]
+
+[node name="CSGBox3D" type="CSGBox3D" parent="LevelGeo" unique_id=1554469751]
+size = Vector3(10, 1, 10)
+
+[node name="CSGBakedMeshInstance3D" type="MeshInstance3D" parent="LevelGeo" unique_id=2070567936]
+mesh = SubResource("ArrayMesh_awdnm")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="LevelGeo" unique_id=1617157917]
+
+[node name="CSGBakedCollisionShape3D" type="CollisionShape3D" parent="LevelGeo/StaticBody3D" unique_id=1134198825]
+shape = SubResource("ConcavePolygonShape3D_e7om1")
+
+[node name="WPlayerCharacter" parent="." unique_id=624020235 node_paths=PackedStringArray("ztarget") instance=ExtResource("2_e7om1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6323869, 2)
+ztarget = NodePath("../WOpponentCharacter")
+
+[node name="WOpponentCharacter" parent="." unique_id=1047846688 node_paths=PackedStringArray("ztarget") instance=ExtResource("3_jltp2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6353321, -3.075262)
+ztarget = NodePath("../WPlayerCharacter")
+
+[node name="Starts" type="Node3D" parent="." unique_id=908660940]
+
+[node name="PlayerStartMarker3D" type="Marker3D" parent="Starts" unique_id=1349795810]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8648369, 1.9177694)
+
+[node name="OpponentStartMarker3D" type="Marker3D" parent="Starts" unique_id=889163061]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7444882, -3.7490916)
+
+[node name="Lighting" type="Node" parent="." unique_id=1260760316]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Lighting" unique_id=1028549529]
+environment = SubResource("Environment_g8cxv")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Lighting" unique_id=1604658107]
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866026, -0.5, 0.75, -0.433013, 0, 5, 0)
+shadow_enabled = true
+directional_shadow_max_distance = 250.0
+
+[node name="MouseHandler" type="Node3D" parent="." unique_id=349218550]
+script = ExtResource("6_5r52i")
+
+[connection signal="timeout" from="GameManager/Timers/RestartTimer" to="GameManager" method="_on_restart_timer_timeout"]
+[connection signal="timeout" from="GameManager/Timers/PreRestartTimer" to="GameManager" method="_on_pre_restart_timer_timeout"]
+[connection signal="pressed" from="GameManager/GameUI/DebugControl/StrikePlayerButton" to="GameManager/GameUI/DebugControl" method="_on_strike_player_button_pressed"]
+[connection signal="pressed" from="GameManager/GameUI/DebugControl/StrikeOppButton" to="GameManager/GameUI/DebugControl" method="_on_strike_opp_button_pressed"]
+[connection signal="slain" from="WPlayerCharacter" to="GameManager" method="_on_w_character_slain"]
+[connection signal="slain" from="WOpponentCharacter" to="GameManager" method="_on_w_character_slain"]

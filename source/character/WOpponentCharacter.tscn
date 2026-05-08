@@ -1,0 +1,85 @@
+[gd_scene format=3 uid="uid://og4d7xwedns0"]
+
+[ext_resource type="Script" uid="uid://b01ee3wqjfu5v" path="res://source/character/w_opponent_character.gd" id="1_p468n"]
+[ext_resource type="Script" uid="uid://b1vv7wqamups4" path="res://addons/character-controller/fps/head_movement_3d.gd" id="2_27sbo"]
+[ext_resource type="Script" uid="uid://dj8mdvjk8fldy" path="res://addons/character-controller/fps/bob/head_bob.gd" id="3_wlnos"]
+[ext_resource type="Curve" path="res://addons/character-controller/fps/bob/bob_curve.tres" id="4_mms8j"]
+[ext_resource type="Script" uid="uid://ces06fic53xcg" path="res://source/character/w_dodge_ability.gd" id="5_whdal"]
+[ext_resource type="Script" uid="uid://5rsltlis8hfc" path="res://addons/character-controller/abilities/walk_ability_3d.gd" id="6_75hop"]
+[ext_resource type="Script" uid="uid://ulyoeaxbl23n" path="res://addons/character-controller/abilities/sprint_ability_3d.gd" id="7_nkk0f"]
+[ext_resource type="Script" uid="uid://drn2mhrkcp474" path="res://addons/character-controller/abilities/crouch_ability_3d.gd" id="8_k0x1a"]
+[ext_resource type="Script" uid="uid://bx7pp0eao8dne" path="res://addons/character-controller/abilities/jump_ability_3d.gd" id="9_yb1ot"]
+[ext_resource type="Script" uid="uid://bhhgclxxaf853" path="res://addons/character-controller/abilities/fly_ability_3d.gd" id="10_65go1"]
+[ext_resource type="Script" uid="uid://brs53isg6clxe" path="res://addons/character-controller/abilities/swim_ability_3d.gd" id="11_aj8dk"]
+[ext_resource type="Script" uid="uid://b0itbkw7cytrs" path="res://source/character/w_collision_handler.gd" id="12_riy33"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_p7ffv"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_juusd"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_27sbo"]
+
+[node name="WOpponentCharacter" type="CharacterBody3D" unique_id=1047846688]
+script = ExtResource("1_p468n")
+metadata/_custom_type_script = "uid://b01ee3wqjfu5v"
+
+[node name="Collision" type="CollisionShape3D" parent="." unique_id=701097188]
+shape = SubResource("CapsuleShape3D_p7ffv")
+
+[node name="Head Check" type="ShapeCast3D" parent="." unique_id=226853547]
+shape = SubResource("SphereShape3D_juusd")
+target_position = Vector3(0, 0.5, 0)
+
+[node name="Head" type="Marker3D" parent="." unique_id=971260847]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.64, 0)
+script = ExtResource("2_27sbo")
+
+[node name="Head Bob" type="Node" parent="Head" unique_id=1217864021]
+script = ExtResource("3_wlnos")
+head_path = NodePath("../FirstPersonCameraReference")
+bob_curve = ExtResource("4_mms8j")
+
+[node name="FirstPersonCameraReference" type="Marker3D" parent="Head" unique_id=1664970032]
+
+[node name="ThirdPersonCameraReference" type="Marker3D" parent="Head" unique_id=1019836738]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4)
+
+[node name="WDodgeAbility3D" type="Node3D" parent="." unique_id=870825813]
+script = ExtResource("5_whdal")
+metadata/_custom_type_script = "uid://ces06fic53xcg"
+
+[node name="Walk Ability 3D" type="Node3D" parent="." unique_id=126443556]
+script = ExtResource("6_75hop")
+
+[node name="Sprint Ability 3D" type="Node3D" parent="." unique_id=1104868928]
+script = ExtResource("7_nkk0f")
+
+[node name="Crouch Ability 3D" type="Node3D" parent="." unique_id=1902175413]
+script = ExtResource("8_k0x1a")
+
+[node name="Jump Ability 3D" type="Node3D" parent="." unique_id=1674904333]
+script = ExtResource("9_yb1ot")
+
+[node name="Fly Ability 3D" type="Node3D" parent="." unique_id=1690790503]
+script = ExtResource("10_65go1")
+
+[node name="Swim Ability 3D" type="Node3D" parent="." unique_id=457953594]
+script = ExtResource("11_aj8dk")
+
+[node name="RayCast3D" type="RayCast3D" parent="Swim Ability 3D" unique_id=1163751042]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+target_position = Vector3(0, -2, 0)
+collision_mask = 8
+hit_from_inside = true
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="CollisionHandler" type="Node" parent="." unique_id=1666192102]
+script = ExtResource("12_riy33")
+metadata/_custom_type_script = "uid://b0itbkw7cytrs"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1652095438]
+mesh = SubResource("CapsuleMesh_27sbo")
+
+[connection signal="strike_blocked" from="CollisionHandler" to="." method="_on_collision_handler_strike_blocked"]
+[connection signal="strike_taken" from="CollisionHandler" to="." method="_on_collision_handler_strike_taken"]
